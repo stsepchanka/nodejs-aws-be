@@ -8,6 +8,7 @@
   - Async/await is used in lambda functions
   - ES6 modules are used for product-service implementation (was added by aws-nodejs-typescript template);
   - Webpack is configured for product-service (was added by aws-nodejs-typescript template);
+  - SWAGGER documentation is created for product-service
   - Lambda handlers (getProductsList, getProductsById) code is written not in 1 single module (file) and separated in codebase.
   - Main error scenarious are handled by API ("Product not found" error, try catch blocks are used in lambda handlers).
 
