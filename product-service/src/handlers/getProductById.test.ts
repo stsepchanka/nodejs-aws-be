@@ -1,6 +1,6 @@
 import { getProductById } from "./getProductById";
-import * as data from "./../data/getProducts";
-import products from "./../data/productList.mock.json";
+import * as data from "../data/getProducts";
+import products from "../data/productList.mock.json";
 import { APIGatewayProxyEvent } from "aws-lambda";
 
 const event: APIGatewayProxyEvent = {

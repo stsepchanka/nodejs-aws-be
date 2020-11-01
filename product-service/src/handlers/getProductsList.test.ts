@@ -1,6 +1,6 @@
 import { getProductsList } from "./getProductsList";
-import * as data from "./../data/getProducts";
-import products from "./../data/productList.mock.json";
+import * as data from "../data/getProducts";
+import products from "../data/productList.mock.json";
 
 let spyOnGetProducts: jest.SpyInstance;
 
