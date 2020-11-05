@@ -1,0 +1,74 @@
+swagger: '2.0'
+info:
+  version: 0.0.1
+  title: Product Service
+host: zvpmfqknbe.execute-api.eu-west-1.amazonaws.com
+basePath: /dev
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /products:
+    get:
+      summary: Gets products list.
+      tags:
+        - Products
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: "#/definitions/Products"
+        '500':
+          description: "File read error"
+  /products/{productId}:
+    get:
+      summary: Gets product by id.
+      tags:
+        - Product
+      produces:
+        - application/json
+      parameters:
+        - name: "productId"
+          in: "path"
+          description: "The product id."
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: "#/definitions/Product"
+        '404':
+          description: "Product is not found"
+definitions:
+  Products:
+    type: array
+    items:
+      $ref: '#/definitions/Product'
+  Product:
+    type: object
+    required:
+      - id
+    properties:
+      id:
+        type: string
+        description: "The product id."
+      title:
+        type: string
+        description: "The product name."
+      description:
+        type: string
+        description: "The product description."
+      count:
+        type: integer
+        format: int32
+        description: "The product count."
+      price:
+        type: number
+        format: float
+        description: "The product price."

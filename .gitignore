@@ -1,0 +1,5 @@
+# VS Code directories
+.vscode
+
+# Serverless directories
+.serverless
