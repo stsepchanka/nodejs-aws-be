@@ -1,25 +1,21 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 import "source-map-support/register";
-import { getProducts } from "../data/getProducts";
+import { selectBookList } from "../repositories/book";
+import { response } from "./../response";
 
-export const getProductsList: APIGatewayProxyHandler = async () => {
+export const getProductsList: APIGatewayProxyHandler = async (
+  event,
+  _context
+) => {
   try {
-    const data = await getProducts();
+    console.log("Request Path: ", event.path);
+    console.log("Request Time: ", event.requestContext.requestTime);
+    console.log("Source IP: ", event.requestContext.identity.sourceIp);
 
-    return {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify(data),
-    };
+    const products = await selectBookList();
+
+    return response(200, products);
   } catch {
-    return {
-      statusCode: 500,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({ message: "File read error" }),
-    };
+    return response(500, { message: "Internal server error" });
   }
 };
