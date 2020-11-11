@@ -1,6 +1,7 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 import "source-map-support/register";
-import { getProducts } from "../data/getProducts";
+import { selectBookById, validId } from "../repositories/book";
+import { response } from "./../response";
 
 export const getProductById: APIGatewayProxyHandler = async (
   event,
@@ -8,27 +9,24 @@ export const getProductById: APIGatewayProxyHandler = async (
 ) => {
   try {
     const { productId } = event.pathParameters;
-    const data = await getProducts();
-    const product = data.find((item) => item.id === productId);
 
-    if (!product) {
-      throw "Product is not found";
+    console.log("Request Path: ", event.path);
+    console.log("Request Path Parameters: ", event.pathParameters);
+    console.log("Request Time: ", event.requestContext.requestTime);
+    console.log("Source IP: ", event.requestContext.identity.sourceIp);
+
+    if (!validId(productId)) {
+      return response(400, { message: "Product ID is invalid" });
     }
 
-    return {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify(product),
-    };
-  } catch (errorMessage) {
-    return {
-      statusCode: 404,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({ message: errorMessage }),
-    };
+    const product = await selectBookById(productId);
+
+    if (!product) {
+      return response(404, { message: "Product is not found" });
+    }
+
+    return response(200, product);
+  } catch {
+    return response(500, { message: "Internal server error" });
   }
 };

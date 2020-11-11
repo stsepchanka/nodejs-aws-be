@@ -24,7 +24,29 @@ paths:
           schema:
             $ref: "#/definitions/Products"
         '500':
-          description: "File read error"
+          description: "Internal server error"
+    post:
+      summary: Gets products list.
+      tags:
+        - Products
+      produces:
+        - application/json
+      parameters:
+        - name: product
+          required: true
+          in: body
+          description: The product that needs to be created.
+          schema:
+            $ref: '#/definitions/CreateProductRequest'
+      responses:
+        '200':
+          description: The product is created successfully.
+          schema:
+            $ref: '#/definitions/BookCreatedResponseData'
+        '400':
+          description: "Product ID is invalid"
+        '500':
+          description: "Internal server error"
   /products/{productId}:
     get:
       summary: Gets product by id.
@@ -43,8 +65,12 @@ paths:
           description: Success
           schema:
             $ref: "#/definitions/Product"
+        '400':
+          description: "Product ID is invalid"
         '404':
           description: "Product is not found"
+        '500':
+          description: "Internal server error"
 definitions:
   Products:
     type: array
@@ -72,3 +98,28 @@ definitions:
         type: number
         format: float
         description: "The product price."
+  CreateProductRequest:
+    type: object
+    required:
+      - title
+    properties:
+      title:
+        type: string
+        description: "The product name."
+      description:
+        type: string
+        description: "The product description."
+      count:
+        type: integer
+        format: int32
+        description: "The product count."
+      price:
+        type: number
+        format: float
+        description: "The product price."
+  BookCreatedResponseData:
+    type: object
+    properties:
+      bookId:
+        type: string
+        description: "Created book ID."
