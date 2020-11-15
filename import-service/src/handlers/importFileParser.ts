@@ -1,6 +1,7 @@
 import { S3Event, S3Handler } from "aws-lambda";
 import * as AWS from "aws-sdk";
 import * as csv from "csv-parser";
+import "source-map-support/register";
 
 const { IMPORT_BUCKET_NAME, IMPORT_BUCKET_REGION } = process.env;
 

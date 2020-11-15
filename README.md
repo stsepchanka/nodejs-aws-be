@@ -8,9 +8,11 @@
   
     #### Additional tasks:
 +1 - async/await is used in lambda functions
++1 - importProductsFile lambda is covered by unit tests (npm run test)
 +1 - At the end of the stream the lambda function should move the file from the uploaded folder into the parsed folder (move the file means that file should be 
 copied into parsed folder, and then deleted from uploaded folder)
 
 Get Signed URL [https://rsipotklc8.execute-api.eu-west-1.amazonaws.com/dev/import?name=catalog.csv](https://rsipotklc8.execute-api.eu-west-1.amazonaws.com/dev/import?name=catalog.csv)
 
 FE [https://d310rchd4cv01e.cloudfront.net/admin/products](https://d310rchd4cv01e.cloudfront.net/admin/products)
+FE repository [https://github.com/stsepchanka/nodejs-aws-fe/pull/3](https://github.com/stsepchanka/nodejs-aws-fe/pull/3)
