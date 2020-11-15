@@ -8,6 +8,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@types/jest": "^26.0.15",
     "aws-sdk": "^2.789.0",
     "csv-parser": "^2.3.3",
     "source-map-support": "^0.5.10",

@@ -1,7 +1,7 @@
 import { importProductsFile } from "./importProductsFile";
 import { APIGatewayProxyEvent } from "aws-lambda";
-import * as AWSMock from "aws-sdk-mock";
-import * as AWS from "aws-sdk";
+
+const AWS = require("aws-sdk");
 
 const event: APIGatewayProxyEvent = {
   body: "",
@@ -57,12 +57,9 @@ test("importProductsFile should return a response with status code 200", async (
 
   const mockSignedUrl = "mock signed url";
 
-  AWSMock.setSDKInstance(AWS);
-
-  AWSMock.mock("S3", "getSignedUrlPromise", (action, _params) => {
-    console.log("S3", "getSignedUrl", "mock called");
-    return Promise.resolve(mockSignedUrl);
-  });
+  AWS.S3 = jest.fn().mockImplementation(() => ({
+    getSignedUrlPromise: () => Promise.resolve(mockSignedUrl),
+  }));
 
   const expected = {
     statusCode: 200,

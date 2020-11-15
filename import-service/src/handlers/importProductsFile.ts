@@ -1,7 +1,8 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
-import * as AWS from "aws-sdk";
 import "source-map-support/register";
 import { response } from "./../response";
+
+const AWS = require("aws-sdk");
 
 const { IMPORT_BUCKET_NAME, IMPORT_BUCKET_REGION } = process.env;
 
