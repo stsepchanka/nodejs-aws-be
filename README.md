@@ -1,18 +1,16 @@
-## Task 4
+## Task 5
 
 1. What is done:
-  - Task 4.1 is implemented
-  - TASK 4.2 is implemented
-  Get Products list [zvpmfqknbe.execute-api.eu-west-1.amazonaws.com/dev/products](zvpmfqknbe.execute-api.eu-west-1.amazonaws.com/dev/products)
-  Get Product by id [zvpmfqknbe.execute-api.eu-west-1.amazonaws.com/dev/products/4a0e8ace-c989-48a2-8301-5e04ca92ea2d](zvpmfqknbe.execute-api.eu-west-1.amazonaws.com/dev/products/4a0e8ace-c989-48a2-8301-5e04ca92ea2d)
-  - Task 4.3 is implemented
-  POST request [zvpmfqknbe.execute-api.eu-west-1.amazonaws.com/dev/products](zvpmfqknbe.execute-api.eu-west-1.amazonaws.com/dev/products)
-  - Products from product-service are represented on Frontend
-  FE [https://d310rchd4cv01e.cloudfront.net](https://d310rchd4cv01e.cloudfront.net/)
+1 - File serverless.yml contains configuration for importProductsFile function
+3 - The importProductsFile lambda function returns a correct response which can be used to upload a file into the S3 bucket
+4 - Frontend application is integrated with importProductsFile lambda
+5 - The importFileParser lambda function is implemented and serverless.yml contains configuration for the lambda
   
     #### Additional tasks:
-  - POST/products lambda functions returns error 400 status code if product data is invalid
-  POST request [https://zvpmfqknbe.execute-api.eu-west-1.amazonaws.com/dev/products](https://zvpmfqknbe.execute-api.eu-west-1.amazonaws.com/dev/products)
-  please try with price or count < 0 or without title
-  - All lambdas return error 500 status code on any error (DB connection, any unhandled error in code)
-  - All lambdas do console.log for each incoming requests and their argumentsTransaction based creation of product
++1 - async/await is used in lambda functions
++1 - At the end of the stream the lambda function should move the file from the uploaded folder into the parsed folder (move the file means that file should be 
+copied into parsed folder, and then deleted from uploaded folder)
+
+Get Signed URL [https://rsipotklc8.execute-api.eu-west-1.amazonaws.com/dev/import?name=catalog.csv](https://rsipotklc8.execute-api.eu-west-1.amazonaws.com/dev/import?name=catalog.csv)
+
+FE [https://d310rchd4cv01e.cloudfront.net/admin/products](https://d310rchd4cv01e.cloudfront.net/admin/products)

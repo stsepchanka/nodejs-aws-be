@@ -2,7 +2,7 @@ import type { Serverless } from "serverless/aws";
 
 const serverlessConfiguration: Serverless = {
   service: {
-    name: "product-service",
+    name: "import-service",
     // app and org for use with dashboard.serverless.com
     // app: your-app-name,
     // org: your-org-name,
@@ -27,39 +27,53 @@ const serverlessConfiguration: Serverless = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
     },
+    iamRoleStatements: [
+      {
+        Effect: "Allow",
+        Action: "s3:ListBucket",
+        Resource: `arn:aws:s3:::aws-training-import-csv`,
+      },
+      {
+        Effect: "Allow",
+        Action: "s3:*",
+        Resource: `arn:aws:s3:::aws-training-import-csv/*`,
+      },
+    ],
   },
   functions: {
-    getProductsList: {
-      handler: "src/handlers/handler.getProductsList",
+    importProductsFile: {
+      handler: "src/handlers/handler.importProductsFile",
       events: [
         {
           http: {
             method: "get",
-            path: "products",
-          },
-        },
-      ],
-    },
-    getProductById: {
-      handler: "src/handlers/handler.getProductById",
-      events: [
-        {
-          http: {
-            method: "get",
-            path: "products/{productId}",
+            path: "import",
+            request: {
+              parameters: {
+                querystrings: {
+                  name: true,
+                },
+              },
+            },
             cors: true,
           },
         },
       ],
     },
-    addProduct: {
-      handler: "src/handlers/handler.addProduct",
+    importFileParser: {
+      handler: "src/handlers/handler.importFileParser",
       events: [
         {
-          http: {
-            method: "post",
-            path: "products",
-            cors: true,
+          s3: {
+            bucket: "aws-training-import-csv",
+            event: "s3:ObjectCreated:*",
+            rules: [
+              {
+                prefix: "uploaded/",
+                suffix: ".csv",
+              },
+            ],
+            existing: true,
           },
         },
       ],
