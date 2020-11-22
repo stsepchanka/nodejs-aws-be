@@ -35,10 +35,34 @@ const serverlessConfiguration: Serverless = {
       },
       {
         Effect: "Allow",
-        Action: "s3:*",
-        Resource: `arn:aws:s3:::aws-training-import-csv/*`,
+        Action: "sqs:*",
+        Resource: { "Fn::GetAtt": ["SQSQueue", "Arn"] },
       },
     ],
+  },
+  resources: {
+    Resources: {
+      SQSQueue: {
+        Type: "AWS::SQS::Queue",
+        Properties: {
+          QueueName: "catalogItemsQueue",
+        },
+      },
+    },
+    Outputs: {
+      QueueURL: {
+        Description: "URL of Catalog Items Queue",
+        Value: { Ref: "SQSQueue" },
+      },
+      QueueARN: {
+        Description: "ARN of Catalog Items Queue",
+        Value: { "Fn::GetAtt": ["SQSQueue", "Arn"] },
+      },
+      QueueName: {
+        Description: "Name of Catalog Items Queue",
+        Value: { "Fn::GetAtt": ["SQSQueue", "QueueName"] },
+      },
+    },
   },
   functions: {
     importProductsFile: {

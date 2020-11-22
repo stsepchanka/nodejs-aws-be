@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "pg": "8.4.2",
+    "aws-sdk": "^2.789.0",
     "source-map-support": "^0.5.10",
     "uuid-validate": "0.0.3"
   },
