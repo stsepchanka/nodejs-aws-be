@@ -1,18 +1,12 @@
-## Task 5
+## Task 6
 
-1. What is done:
-1 - File serverless.yml contains configuration for importProductsFile function
-3 - The importProductsFile lambda function returns a correct response which can be used to upload a file into the S3 bucket
-4 - Frontend application is integrated with importProductsFile lambda
-5 - The importFileParser lambda function is implemented and serverless.yml contains configuration for the lambda
-  
-    #### Additional tasks:
-+1 - async/await is used in lambda functions
-+1 - importProductsFile lambda is covered by unit tests (npm run test)
-+1 - At the end of the stream the lambda function should move the file from the uploaded folder into the parsed folder (move the file means that file should be 
-copied into parsed folder, and then deleted from uploaded folder)
+### What is done:
+1 - File serverless.yml contains configuration for catalogBatchProcess function
+2 - File serverless.yml contains policies to allow lambda catalogBatchProcess function to interact with SNS and SQS
+3 - File serverless.yml contains configuration for SQS catalogItemsQueue
+4 - File serverless.yml contains configuration for SNS Topic createProductTopic and email subscription
 
-Get Signed URL [https://rsipotklc8.execute-api.eu-west-1.amazonaws.com/dev/import?name=catalog.csv](https://rsipotklc8.execute-api.eu-west-1.amazonaws.com/dev/import?name=catalog.csv)
+#### Additional tasks:
++1 - set a Filter Policy for SNS createProductTopic in serverless.yml (Create an additional email subscription and distribute messages to different emails depending on the filter for any product attribute)
 
 FE [https://d310rchd4cv01e.cloudfront.net/admin/products](https://d310rchd4cv01e.cloudfront.net/admin/products)
-FE repository [https://github.com/stsepchanka/nodejs-aws-fe/pull/3](https://github.com/stsepchanka/nodejs-aws-fe/pull/3)
