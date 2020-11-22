@@ -7,6 +7,7 @@
 4 - File serverless.yml contains configuration for SNS Topic createProductTopic and email subscription
 
 #### Additional tasks:
++1 - catalogBatchProcess lambda is covered by unit tests (npm run test)
 +1 - set a Filter Policy for SNS createProductTopic in serverless.yml (Create an additional email subscription and distribute messages to different emails depending on the filter for any product attribute)
 
 FE [https://d310rchd4cv01e.cloudfront.net/admin/products](https://d310rchd4cv01e.cloudfront.net/admin/products)
