@@ -3,10 +3,11 @@ import * as AWS from "aws-sdk";
 import * as csv from "csv-parser";
 import "source-map-support/register";
 
-const { IMPORT_BUCKET_NAME, IMPORT_BUCKET_REGION } = process.env;
+const { IMPORT_BUCKET_NAME, IMPORT_BUCKET_REGION, SQS_URL } = process.env;
 
 export const importFileParser: S3Handler = (event: S3Event) => {
   const s3 = new AWS.S3({ region: IMPORT_BUCKET_REGION });
+  const sqs = new AWS.SQS();
 
   event.Records.forEach((record) => {
     let objectKey = record.s3.object.key;
@@ -21,7 +22,15 @@ export const importFileParser: S3Handler = (event: S3Event) => {
     s3Stream
       .pipe(csv())
       .on("data", (data) => {
-        console.log(data);
+        sqs.sendMessage(
+          {
+            QueueUrl: SQS_URL,
+            MessageBody: JSON.stringify(data),
+          },
+          () => {
+            console.log("Send data", data);
+          }
+        );
       })
       .on("end", async () => {
         console.log(`Copy from ${IMPORT_BUCKET_NAME}/${objectKey}`);
