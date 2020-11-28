@@ -80,6 +80,14 @@ const serverlessConfiguration: Serverless = {
               },
             },
             cors: true,
+            authorizer: {
+              name: "basicAuthorizer",
+              arn:
+                "arn:aws:lambda:eu-west-1:895273477359:function:authorization-service-dev-basicAuthorizer",
+              resultTtlInSeconds: 0,
+              identitySource: "method.request.header.Authorization",
+              type: "token",
+            },
           },
         },
       ],
