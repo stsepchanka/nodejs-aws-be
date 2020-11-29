@@ -15,7 +15,11 @@ const serverlessConfiguration: Serverless = {
     },
   },
   // Add the serverless-webpack plugin
-  plugins: ["serverless-webpack", "serverless-dotenv-plugin"],
+  plugins: [
+    "serverless-webpack",
+    "serverless-dotenv-plugin",
+    "serverless-pseudo-parameters",
+  ],
   provider: {
     name: "aws",
     runtime: "nodejs12.x",
@@ -86,6 +90,14 @@ const serverlessConfiguration: Serverless = {
           http: {
             method: "get",
             path: "products",
+            cors: true,
+            authorizer: {
+              name: "cognitoAuthorizer",
+              arn:
+                "arn:aws:cognito-idp:#{AWS::Region}:#{AWS::AccountId}:userpool/eu-west-1_k2IXL0Lvk",
+              identitySource: "method.request.header.Authorization",
+              type: "COGNITO_USER_POOLS",
+            },
           },
         },
       ],

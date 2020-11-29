@@ -17,3 +17,10 @@ FE [https://d310rchd4cv01e.cloudfront.net/admin/products](https://d310rchd4cv01e
 Please add to the local storage the variable with
 key: authorization_token
 value: U1RTRVBDSEFOS0E6VEVTVF9QQVNTV09SRA==
+
+
+#### Cognito
+
+Login form https://task7.auth.eu-west-1.amazoncognito.com/login?client_id=19kaodou3ndhuurv6p3epv983t&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=http://localhost:3000/
+
+Get Products https://zvpmfqknbe.execute-api.eu-west-1.amazonaws.com/dev/products

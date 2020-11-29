@@ -111,6 +111,7 @@ const serverlessConfiguration: Serverless = {
             },
             cors: true,
             authorizer: {
+              name: "basicAuthorizer",
               arn:
                 "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:authorization-service-dev-basicAuthorizer",
               resultTtlInSeconds: 0,
