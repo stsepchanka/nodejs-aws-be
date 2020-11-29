@@ -48,6 +48,32 @@ const serverlessConfiguration: Serverless = {
           QueueName: "catalogItemsQueue",
         },
       },
+      GatewayResponseDenied: {
+        Type: "AWS::ApiGateway::GatewayResponse",
+        Properties: {
+          ResponseParameters: {
+            "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
+            "gatewayresponse.header.Access-Control-Allow-Credentials": "'true'",
+          },
+          ResponseType: "ACCESS_DENIED",
+          RestApiId: {
+            Ref: "ApiGatewayRestApi",
+          },
+        },
+      },
+      GatewayResponseUnauthorized: {
+        Type: "AWS::ApiGateway::GatewayResponse",
+        Properties: {
+          ResponseParameters: {
+            "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
+            "gatewayresponse.header.Access-Control-Allow-Credentials": "'true'",
+          },
+          ResponseType: "UNAUTHORIZED",
+          RestApiId: {
+            Ref: "ApiGatewayRestApi",
+          },
+        },
+      },
     },
     Outputs: {
       QueueURL: {
@@ -81,7 +107,6 @@ const serverlessConfiguration: Serverless = {
             },
             cors: true,
             authorizer: {
-              name: "basicAuthorizer",
               arn:
                 "arn:aws:lambda:eu-west-1:895273477359:function:authorization-service-dev-basicAuthorizer",
               resultTtlInSeconds: 0,
