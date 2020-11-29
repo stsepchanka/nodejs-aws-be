@@ -15,7 +15,11 @@ const serverlessConfiguration: Serverless = {
     },
   },
   // Add the serverless-webpack plugin
-  plugins: ["serverless-webpack", "serverless-dotenv-plugin"],
+  plugins: [
+    "serverless-webpack",
+    "serverless-dotenv-plugin",
+    "serverless-pseudo-parameters",
+  ],
   provider: {
     name: "aws",
     runtime: "nodejs12.x",
@@ -108,7 +112,7 @@ const serverlessConfiguration: Serverless = {
             cors: true,
             authorizer: {
               arn:
-                "arn:aws:lambda:eu-west-1:895273477359:function:authorization-service-dev-basicAuthorizer",
+                "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:authorization-service-dev-basicAuthorizer",
               resultTtlInSeconds: 0,
               identitySource: "method.request.header.Authorization",
               type: "token",
