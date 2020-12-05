@@ -1,13 +1,26 @@
-## Task 6
+## Task 7
 
 ### What is done:
-1 - File serverless.yml contains configuration for catalogBatchProcess function
-2 - File serverless.yml contains policies to allow lambda catalogBatchProcess function to interact with SNS and SQS
-3 - File serverless.yml contains configuration for SQS catalogItemsQueue
-4 - File serverless.yml contains configuration for SNS Topic createProductTopic and email subscription
+- 1 - authorization-service is added to the repo, has correct basicAuthorizer lambda and correct serverless.yaml file
+- 3 - import-service serverless.yaml file has authorizer configuration for the importProductsFile lambda. Request to the importProductsFile lambda should work only with correct authorization_token being decoded and checked by basicAuthorizer lambda. Response should be in 403 HTTP status if access is denied for this user (invalid authorization_token) and in 401 HTTP status if Authorization header is not provided.
+- 5 - update client application to send Authorization: Basic authorization_token header on import. Client should get authorization_token value from browser localStorage https://developer.mozilla.org/ru/docs/Web/API/Window/localStorage authorization_token = localStorage.getItem('authorization_token')
 
 #### Additional tasks:
-+1 - catalogBatchProcess lambda is covered by unit tests (npm run test)
-+1 - set a Filter Policy for SNS createProductTopic in serverless.yml (Create an additional email subscription and distribute messages to different emails depending on the filter for any product attribute)
+- +1 - Client application should display alerts for the responses in 401 and 403 HTTP statuses. This behavior should be added to the nodejs-aws-fe-main/src/index.tsx file
+
+Import products endpoint [https://rsipotklc8.execute-api.eu-west-1.amazonaws.com/dev/import?name=abc.csv](https://rsipotklc8.execute-api.eu-west-1.amazonaws.com/dev/import?name=abc.csv)
+
+FE Repository PR [https://github.com/stsepchanka/nodejs-aws-fe/pull/4](https://github.com/stsepchanka/nodejs-aws-fe/pull/4)
 
 FE [https://d310rchd4cv01e.cloudfront.net/admin/products](https://d310rchd4cv01e.cloudfront.net/admin/products)
+
+Please add to the local storage the variable with
+key: authorization_token
+value: U1RTRVBDSEFOS0E6VEVTVF9QQVNTV09SRA==
+
+
+#### Cognito
+
+Login form https://task7.auth.eu-west-1.amazoncognito.com/login?client_id=19kaodou3ndhuurv6p3epv983t&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=http://localhost:3000/
+
+Get Products https://zvpmfqknbe.execute-api.eu-west-1.amazonaws.com/dev/products
