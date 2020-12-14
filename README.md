@@ -1,26 +1,18 @@
-## Task 7
+## Task 9
 
 ### What is done:
-- 1 - authorization-service is added to the repo, has correct basicAuthorizer lambda and correct serverless.yaml file
-- 3 - import-service serverless.yaml file has authorizer configuration for the importProductsFile lambda. Request to the importProductsFile lambda should work only with correct authorization_token being decoded and checked by basicAuthorizer lambda. Response should be in 403 HTTP status if access is denied for this user (invalid authorization_token) and in 401 HTTP status if Authorization header is not provided.
-- 5 - update client application to send Authorization: Basic authorization_token header on import. Client should get authorization_token value from browser localStorage https://developer.mozilla.org/ru/docs/Web/API/Window/localStorage authorization_token = localStorage.getItem('authorization_token')
+- 3 - A working and correct express application should be in the bff-service folder. Reviewer can start this application locally with any valid configuration in the .env file and this application should works as described in the task 9.1
+- 5 - The bff-service should be deployed with Elastic Beanstalk. The bff-service call should be redirected to the appropriate service : product-service or CART. The response from the bff-service should be the same as if product-service or CART services were called directly.
 
 #### Additional tasks:
-- +1 - Client application should display alerts for the responses in 401 and 403 HTTP statuses. This behavior should be added to the nodejs-aws-fe-main/src/index.tsx file
+- +1 - Add a cache at the bff-service level for a request to the getProductsList function of the product-service. The cache should expire in 2 minutes.
+- +1 - Use NestJS to create bff-service instead of express
 
-Import products endpoint [https://rsipotklc8.execute-api.eu-west-1.amazonaws.com/dev/import?name=abc.csv](https://rsipotklc8.execute-api.eu-west-1.amazonaws.com/dev/import?name=abc.csv)
+##### Products API
+- GET http://stsepchanka-bff-api-dev.eu-west-1.elasticbeanstalk.com/products
+- GET http://stsepchanka-bff-api-dev.eu-west-1.elasticbeanstalk.com/products/93478c21-e0aa-46c4-b0f4-14e7248d12bd
+- POST http://stsepchanka-bff-api-dev.eu-west-1.elasticbeanstalk.com/products
 
-FE Repository PR [https://github.com/stsepchanka/nodejs-aws-fe/pull/4](https://github.com/stsepchanka/nodejs-aws-fe/pull/4)
-
-FE [https://d310rchd4cv01e.cloudfront.net/admin/products](https://d310rchd4cv01e.cloudfront.net/admin/products)
-
-Please add to the local storage the variable with
-key: authorization_token
-value: U1RTRVBDSEFOS0E6VEVTVF9QQVNTV09SRA==
-
-
-#### Cognito
-
-Login form https://task7.auth.eu-west-1.amazoncognito.com/login?client_id=19kaodou3ndhuurv6p3epv983t&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=http://localhost:3000/
-
-Get Products https://zvpmfqknbe.execute-api.eu-west-1.amazonaws.com/dev/products
+##### Cart API
+- GET http://stsepchanka-bff-api-dev.eu-west-1.elasticbeanstalk.com/cart
+- PUT http://stsepchanka-bff-api-dev.eu-west-1.elasticbeanstalk.com/cart
