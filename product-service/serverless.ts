@@ -91,13 +91,6 @@ const serverlessConfiguration: Serverless = {
             method: "get",
             path: "products",
             cors: true,
-            authorizer: {
-              name: "cognitoAuthorizer",
-              arn:
-                "arn:aws:cognito-idp:#{AWS::Region}:#{AWS::AccountId}:userpool/eu-west-1_k2IXL0Lvk",
-              identitySource: "method.request.header.Authorization",
-              type: "COGNITO_USER_POOLS",
-            },
           },
         },
       ],
